@@ -12,8 +12,8 @@
 
 @property (strong, nonatomic) UIWebView *webView;
 
-@property (strong, nonatomic) UIBarButtonItem *stopLoadingButton;
 @property (strong, nonatomic) UIBarButtonItem *reloadButton;
+@property (strong, nonatomic) UIBarButtonItem *stopLoadingButton;
 @property (strong, nonatomic) UIBarButtonItem *backButton;
 @property (strong, nonatomic) UIBarButtonItem *forwardButton;
 
@@ -46,11 +46,12 @@
 - (void)commonInit
 {
     _showsNavigationToolbar = YES;
+    _showsHomeButton = NO;
 }
 
 - (void)load
 {
-    NSURLRequest *request = [NSURLRequest requestWithURL:self.URL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60.0];
+    NSURLRequest *request = [NSURLRequest requestWithURL:self.URL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:4.0];
     [self.webView loadRequest:request];
     
     if (self.navigationController.toolbarHidden) {
@@ -181,10 +182,6 @@
     self.backButton.enabled = NO;
     self.forwardButton.enabled = NO;
     
-    UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
-                                                                                  target:self
-                                                                                  action:@selector(action:)];
-    
     UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                            target:nil
                                                                            action:nil];
@@ -194,7 +191,14 @@
                                                                             action:nil];
     space_.width = 60.0f;
     
-    self.toolbarItems = @[self.stopLoadingButton, space, self.backButton, space_, self.forwardButton, space, actionButton];
+    if (self.showsHomeButton) {
+        self.toolbarItems = @[self.stopLoadingButton, space, self.backButton, space_, self.forwardButton, space, self.homeButton ];
+    } else {
+        UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+                                                                                      target:self
+                                                                                      action:@selector(action:)];
+        self.toolbarItems = @[self.stopLoadingButton, space, self.backButton, space_, self.forwardButton, space, actionButton ];
+    }
 }
 
 - (void)toggleState

@@ -22,7 +22,7 @@
  */
 @property (strong, nonatomic) NSURL *URL;
 
-/** 
+/**
  * The array of data objects on which to perform the activity.
  * `@[self.URL]` is used if nothing is provided.
  */
@@ -44,6 +44,11 @@
  * The default value of this property is `YES`.
  */
 @property (assign, nonatomic) BOOL showsNavigationToolbar;
+
+
+@property (strong, nonatomic) UIBarButtonItem *homeButton;
+
+@property (assign, nonatomic) BOOL showsHomeButton;
 
 /**
  * Loads the given `URL`.
