@@ -62,6 +62,21 @@
     }
 }
 
+- (void)reload
+{
+    [self.webView stopLoading];
+    [self.webView removeFromSuperview];
+    self.webView.delegate = nil;
+    self.webView = nil;
+    
+    [self loadView];
+    
+    self.webView.delegate = self;
+    if (self.URL) {
+        [self load];
+    }
+}
+
 - (void)clear
 {
     [self.webView loadHTMLString:@"" baseURL:nil];

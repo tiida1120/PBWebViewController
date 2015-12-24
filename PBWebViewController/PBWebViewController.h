@@ -57,6 +57,8 @@
  */
 - (void)load;
 
+- (void)reload;
+
 /**
  * Clears the contents of the web view.
  */
